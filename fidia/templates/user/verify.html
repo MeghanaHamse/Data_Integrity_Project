@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}	
+{% block content %}   
+
+                <div class="row">
+                    <div class="col-md-3 register-left">
+                         <img src="{% static ''%}images/file-cloud.png" alt=""/>
+                        <h3>Welcome</h3>
+                        <p>Data Integrity Auditing using blockchain to Secure from Attackers</p>
+						<input type="button" class="btn" name="" onclick="document.location.href='/user/changepassword'" value="Change Password"/> 
+                        <input type="button" name="" onclick="document.location.href='/logout'" value="Logout"/><br/>
+                    </div>
+                    <div class="col-md-9 register-right">
+					        <h3 class="alert alert-info  m-5">You are in waiting state.<br/>A private key will be generated and sent to your email. Then you can start uploading files.
+							</h3>
+                    </div>
+                </div>
+
+           
+{% endblock %}

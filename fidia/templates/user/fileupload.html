@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% load static %}	
+{% block content %}   
+
+                <div class="row">
+                    <div class="col-md-3 register-left">
+                         <img src="{% static ''%}images/file-cloud.png" alt=""/>
+                        <h3>Welcome</h3>
+                        <p>Data Integrity Auditing using blockchain to Secure from Attackers</p>
+						<input type="button" class="btn" name="" onclick="document.location.href='/user/changepassword'" value="Change Password"/> 
+                        <input type="button" name="" onclick="document.location.href='/logout'" value="Logout"/><br/>
+                    </div>
+                    <div class="col-md-9 register-right">
+						<div class="row"> 
+	   <div class="col text-center mt-2">
+		<h2>File Upload</h2> 
+		</div> 
+	</div>
+					 <h3 class="alert alert-info  m-5">
+ <form id="uploadForm" enctype="multipart/form-data">
+  {% csrf_token %}
+    <label>Choose File:</label>
+    <input type="file" name="file" id="fileInput">
+    <input type="submit" name="submit" value="UPLOAD"/>
+</form>
+<!-- Progress bar -->
+<div class="progress m-5" style="height:30px;">
+    <div class="progress-bar"></div>
+</div>
+<!-- Display upload status -->
+<div id="uploadStatus" class="text-center"></div>
+<div id="encryptionStatus" class="text-center"></div>
+                    </div>
+					</div>
+                </div>
+
+           
+{% endblock %}
+{% block jsscript %}
+<script>
+$(document).ready(function(){
+    // File upload via Ajax
+    $("#uploadForm").on('submit', function(e){
+        e.preventDefault();
+        $.ajax({
+            xhr: function() {
+                var xhr = new window.XMLHttpRequest();
+                xhr.upload.addEventListener("progress", function(evt) {
+                    if (evt.lengthComputable) {
+                        var percentComplete = ((evt.loaded / evt.total) * 100);
+                        $(".progress-bar").width(percentComplete + '%');
+                        $(".progress-bar").html(percentComplete+'%');
+                    }
+                }, false);
+                return xhr;
+            },
+            type: 'POST',
+            url: '/user/filetocloud',
+            data: new FormData(this),
+            contentType: false,
+            cache: false,
+            processData:false,
+            beforeSend: function(){
+                $(".progress-bar").width('0%');
+                $('#uploadStatus').html('Uploading File.......');
+            },
+            error:function(){
+                $('#uploadStatus').html('<p style="color:#EA4335;">File upload failed, please try again.</p>');
+            },
+            success: function(resp){ 
+                if(resp.success == 1){
+                    $('#uploadForm')[0].reset();
+                    $('#uploadStatus').html('<p style="color:#28A74B;">File has uploaded successfully!.</p>');
+					$('#encryptionStatus').html('<p style="color:#28A74B;"><img src="{% static ''%}images/loading-enc.gif"/><br/>Encrypting & Compressing File now.....</p>');
+					encryptfile(resp.id);
+                }else if(resp.success == 0){
+                    $('#uploadStatus').html('<p style="color:#EA4335;">'+resp.message+'</p>');
+                }
+            }
+        });
+    });
+	
+/*   
+   // File type validation
+    $("#fileInput").change(function(){
+        var allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.ms-office', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'image/jpeg', 'image/png', 'image/jpg', 'image/gif'];
+        var file = this.files[0];
+        var fileType = file.type;
+        if(!allowedTypes.includes(fileType)){
+            alert('Please select a valid file (PDF/DOC/DOCX/JPEG/JPG/PNG/GIF).');
+            $("#fileInput").val('');
+            return false;
+        }
+    });
+*/
+});
+function encryptfile(id)
+{
+  	$.ajax({ 
+            url: '/user/encryptfile/'+id,  
+            success: function(data)
+           { 
+		     if(data=="ok") 
+				$('#encryptionStatus').html('<p style="color:#28A74B;">Encrypted & Encrypted File Successfully.</p>');
+		   }
+			 });
+
+}
+</script>
+{% endblock %}

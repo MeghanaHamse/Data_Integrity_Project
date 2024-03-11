@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}	
+{% block content %}   
+
+                <div class="row">
+                    <div class="col-md-3 register-left" >
+                         <img src="{% static ''%}images/file-cloud.png" alt=""/>
+                        <h3>Welcome</h3>
+                        <p>Data Integrity Auditing using blockchain to Secure from Attackers</p>
+						<input type="button" class="btn" name="" onclick="document.location.href='/kgc/changepassword'" value="Change Password"/> 
+                        <input type="button" name="" onclick="document.location.href='/logout'" value="Logout"/><br/>
+                    </div>
+                    <div class="col-md-9 register-right" style="overflow-y:scroll;">
+									<div class="row"> 
+	   <div class="col-12 text-center mt-2">
+		<h2>Private Key Requests</h2> 
+		</div> 
+	</div>
+					 <table class="table table-bordered keyreq mt-4 mb-4">
+  <thead class="thead-dark">
+    <tr>
+	  <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Status</th>
+      <th scope="col">Biometric</th>
+	  <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+	{% if waiting|length > 0 %}
+	 {% for d in waiting %}
+	 <tr>
+      <th>{{ d.id }}</th>
+      <td>{{ d.fullname }}</td>
+      <td>{{ d.email }}</td>
+      <td>{% if d.status == 0 %} wating {% endif %}</td>
+	  <td><image src="{% static ''%}uploads/bimages/{{ d.biometricimage }}" style="width:100px;height;100px"/></td>
+	  <td><a class='btn btn-primary' href="/kgc/acceptkeyreq/{{d.id}}">Accept</a><span class="p-2">/</span><a class='btn btn-danger' href="/kgc/rejectkeyreq/{{d.id}}">Reject</a></td>
+    </tr>
+      {% endfor %}
+	  {% else %}
+	     <tr><th colspan=6>No Records found</th></tr>
+      {% endif %}
+   </tbody>
+</table>
+					 </div>
+                </div>
+
+           
+{% endblock %}

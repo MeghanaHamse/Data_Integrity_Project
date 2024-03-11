@@ -1,0 +1,9 @@
+1. Go to the location where the manage.py file is saved and enter cmd to open command prompt.
+
+2. Type "python manage.py runserver".
+
+3. Download the python packages it prompts "pip install package-name".
+
+4. Now again type "python manage.py runserver".
+
+http://127.0.0.1:8000/attacks/attack.py%20file=baninfo.txt&content=iamattack

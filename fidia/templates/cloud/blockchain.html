@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}	
+{% block content %}   
+
+                <div class="row">
+                    <div class="col-md-3 register-left" >
+                         <img src="{% static ''%}images/file-cloud.png" alt=""/>
+                        <h3>Welcome</h3>
+                        <p>Data Integrity Auditing using blockchain to Secure from Attackers</p>
+						<input type="button" class="btn" name="" onclick="document.location.href='/user/changepassword'" value="Change Password"/> 
+                        <input type="button" name="" onclick="document.location.href='/logout'" value="Logout"/><br/>
+                    </div>
+                    <div class="col-md-9 register-right">
+					        <div class="container">
+								<br/>
+	<div class="row">
+	    <br/>
+	   <div class="col text-center">
+		<h2>Block Chain</h2> 
+		</div> 
+	</div>
+	<br/> 
+	     {% csrf_token %}
+		 <table class="table table-bordered">
+                    <thead class="thead-dark">
+                    <tr><th>Validate Blockchain</th><td><button class="btn btn-primary" onclick="validatechain()">Validate</button></td><td id="chainstatus"></td></tr>  
+                    <tr><th>Display Blockchain</th><td colspan=2><button class="btn btn-primary" onclick="displaychain()">Display</button></td></tr>
+					<tr><td colspan=3 id="chaindisp"></td></tr>                
+				   </thead>  
+					</table>
+</div> 
+
+ </div> 
+   </div>          
+{% endblock %}
+{% block jsscript %}
+<script>  
+ function validatechain(){
+     $('button').attr('disabled',true);
+	 $('#chainstatus').html("Validating......");
+	 			   $.ajax({ 
+           url: '/cloud/validatechain', 
+		   dataType: "json",
+           success: function(data)
+           {
+		    $('button').attr('disabled',false);
+             $('#chainstatus').html(data.message);
+           }});
+ }
+  function displaychain(){
+     $('button').attr('disabled',true);
+	 $('#chaindisp').html("Fetching......");
+	 			   $.ajax({ 
+           url: '/cloud/getchain',  
+           success: function(data)
+           {
+		     $('button').attr('disabled',false);
+             $('#chaindisp').html(data);
+           }});
+ }
+</script>
+{% endblock %}

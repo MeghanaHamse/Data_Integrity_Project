@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}	
+{% block content %}   
+
+                <div class="row">
+                    <div class="col-md-3 register-left">
+                         <img src="{% static ''%}images/file-cloud.png" alt=""/>
+                        <h3>Welcome</h3>
+                        <p>Data Integrity Auditing using blockchain to Secure from Attackers</p>
+						<input type="button" class="btn" name="" onclick="document.location.href='/user/changepassword'" value="Change Password"/> 
+                        <input type="button" name="" onclick="document.location.href='/logout'" value="Logout"/><br/>
+                    </div>
+                    <div class="col-md-9 register-right p-5" style="overflow-y:scroll;">
+					<div class="row"> 
+	   <div class="col text-center mt-2">
+		<h2>Request File Audit</h2> 
+		</div> 
+	</div>
+					 <table class="table table-bordered keyreq   mb-1 mb-4">
+  <thead class="thead-dark">
+    <tr>
+	  <th scope="col">ID</th>
+      <th scope="col">Filename</th>
+      <th scope="col">UploadedAt</th>
+      <th scope="col">Hashcode</th> 
+	  <th scope="col">Last Audited</th>
+      <th scope="col">Action</th>
+	</tr>
+  </thead>
+  <tbody>
+    
+	{% if files|length > 0 %}
+	 {% for d in files %}
+	 <tr>
+      <th>{{ d.id }}</th>
+      <td>{{ d.filename }}</td>
+      <td>{{ d.creationDate }}</td> 
+      <td><span title='{{ d.hashcode }}'>{{ d.hashcode|slice:"0:5" }}...</span></td> 
+	  <td>{{ d.lastaudited }}</td>
+	  <td><a href="/user/requesttpaaudit/{{d.id}}">Request Audit</a></td>
+	</tr>
+      {% endfor %}
+	  {% else %}
+	     <tr><th colspan=6>No Records found</th></tr>
+      {% endif %}
+   </tbody>
+</table>
+					 </div>
+                </div>
+
+           
+{% endblock %}

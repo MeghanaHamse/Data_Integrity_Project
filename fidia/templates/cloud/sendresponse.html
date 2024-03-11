@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load static %}	
+{% block content %}   
+
+                <div class="row">
+                    <div class="col-md-3 register-left" >
+                         <img src="{% static ''%}images/file-cloud.png" alt=""/>
+                        <h3>Welcome</h3>
+                        <p>Data Integrity Auditing using blockchain to Secure from Attackers</p>
+						<input type="button" class="btn" name="" onclick="document.location.href='/cloud/changepassword'" value="Change Password"/>
+                        <input type="button" name="" onclick="document.location.href='/logout'" value="Logout"/><br/>
+                    </div>
+                    <div class="col-md-9 register-right">
+					        <div class="container">
+								<br/>
+	<div class="row">
+	    <br/>
+	   <div class="col text-center">
+		<h2>Cloud Audit</h2> 
+		</div> 
+	</div>
+	<br/>
+						 <table class="table table-bordered keyreq m-4">
+  <thead class="thead-dark">
+    <tr><th scope="col">ID</th> <td>{{ id }}</td></tr>
+    <tr><th scope="col">Login Name</th>  <td>{{ username }}</td></tr>
+    <tr><th scope="col">Filename</th><td>{{  file.filename }}</td></tr>
+	  <tr><td colspan="2" class="text-center"> <input type="btn" class="startprogress btn btn-primary" value="Start"/></td></tr> 
+    <tr><td colspan="2" class="progressing decompress d-none">Decompressing file.........</td></tr> 
+	<tr><td colspan="2" class="progressing decrypt d-none">Decrypting file.........</td></tr> 
+	<tr><td colspan="2" class="progressing gensign d-none">Generating Signature of file.........</td></tr> 
+	 <tr class="d-none sendresponsedb"><td colspan=2 class="text-center">
+	   <form method="post" action="/cloud/sendresponsedb">
+	     {% csrf_token %}
+	      <input type="hidden" name="requestid" value="{{id}}">
+		  <input type="submit" class="btn btn-primary" value="Send Response"/>
+	   </form>
+	 </td> </tr>
+  </thead> 
+</table>
+ </div>
+                    </div>
+                </div>
+
+           
+{% endblock %}
+{% block jsscript %}
+<script>
+var id={{ id }};
+$(document).ready(function(){
+    // File upload via Ajax
+    $(".startprogress").on('click', function(e){
+	    $(".startprogress").parent().parent().hide();
+		 $(".decompress").removeClass('d-none');
+		  	$.ajax({ 
+            url: '/cloud/decompressfile/'+id,  
+            success: function(data)
+           { 
+		       if(data=="ok") 
+				 {
+				     $(".decompress").html('File Decompressed successfully.').removeClass('progressing');
+					 		 $(".decrypt").removeClass('d-none');
+		  	$.ajax({ 
+            url: '/cloud/decryptfile/'+id,  
+            success: function(data)
+           { 
+		       if(data=="ok") 
+				 {
+				     $(".decrypt").html('File Decrypted successfully.').removeClass('progressing');
+					 $(".gensign").removeClass('d-none');
+					 $.ajax({ 
+            url: '/cloud/gensign/'+id,  
+            success: function(data)
+           { 
+		       if(data=="ok") 
+				 {
+				     $(".gensign").html('Generated Signature of file.').removeClass('progressing');
+					 $(".sendresponsedb").removeClass('d-none');				 
+				 }
+			}});
+				 }
+			}});	 
+					 
+				 }
+		   }
+			 });	
+	});
+	});
+</script>
+{% endblock %}

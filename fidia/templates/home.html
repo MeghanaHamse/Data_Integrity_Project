@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}	
+{% block content %}   
+
+                <div class="row">
+                    <div class="col-md-3 register-left">
+                        <img src="{% static ''%}images/file-cloud.png" alt=""/>
+                        <h3>Welcome</h3>
+                        <p>Data  Integirty Auditing using Blockchain to Secure from Attacker </p>
+                        <input type="button" name="" onclick="document.location.href='/register'" value="Register"/><br/>
+                    </div>
+                    <div class="col-md-9 register-right d-flex justify-content-end p-2">
+					  <img src="{% static ''%}images/hpbanner.png" style="width: 100%;height: auto;margin: 10%;"/>
+                         </div>
+                </div>
+
+           
+{% endblock %}

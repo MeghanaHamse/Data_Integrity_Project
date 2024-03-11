@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}	
+{% block content %}   
+
+                <div class="row">
+                    <div class="col-md-3 register-left" >
+                         <img src="{% static ''%}images/file-cloud.png" alt=""/>
+                        <h3>Welcome</h3>
+                        <p>Data Integrity Auditing using blockchain to Secure from Attackers</p>
+						<input type="button" class="btn" name="" onclick="document.location.href='/cloud/changepassword'" value="Change Password"/> 
+                     
+                        <input type="button" name="" onclick="document.location.href='/logout'" value="Logout"/><br/>
+                    </div>
+                    <div class="col-md-9 register-right">
+					        <div class="container">
+								<br/>
+	<div class="row">
+	    <br/>
+	   <div class="col text-center">
+		<h2>Dashboard</h2> 
+		</div> 
+	</div>
+	<br/>
+		<div class="row text-center m-4">
+	        <div class="col-6">
+	        <div class="counter"> 
+      <h2 class="timer count-title count-number">{{ total }}</h2>
+       <p class="count-text ">Total Audit Requests</p>
+    </div>
+	        </div>
+              <div class="col-6">
+               <div class="counter"> 
+      <h2 class="timer count-title count-number">{{ senttotpa }}</h2>
+      <p class="count-text ">Audit Requests Waiting</p>
+    </div>
+              </div>
+              <div class="col-6">
+                  <div class="counter"> 
+      <h2 class="timer count-title count-number">{{ senttocloud }}</h2>
+      <p class="count-text ">Requests Waiting At Cloud</p>
+    </div></div>
+              <div class="col-6">
+              <div class="counter"> 
+      <h2 class="timer count-title count-number">{{ sentfromcloud }}</h2>
+       <p class="count-text ">Requests Proccessed At Cloud</p>
+    </div>
+              </div>
+			  
+			                <div class="col-6">
+              <div class="counter"> 
+      <h2 class="timer count-title count-number">{{ tpaaudited }}</h2>
+       <p class="count-text ">TPA Verified</p>
+    </div>
+              </div>
+			  
+			                <div class="col-6">
+              <div class="counter"> 
+      <h2 class="timer count-title count-number">{{ useraudited }}</h2>
+       <p class="count-text ">Users Verified</p>
+    </div>
+              </div>
+         </div>
+</div>
+                    </div>
+                </div>
+
+           
+{% endblock %}

@@ -1,0 +1,113 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="content-language" content="cs" />
+    <meta name="robots" content="all,follow" />
+
+    <meta name="author" content="All: ... [Nazev webu - www.url.cz]; e-mail: info@url.cz" />
+    <meta name="copyright" content="Design/Code: Vit Dlouhy [Nuvio - www.nuvio.cz]; e-mail: vit.dlouhy@nuvio.cz" />
+    
+    <title>Data  Integirty Auditing using Blockchain to Secure from Attacker </title>
+    <meta name="description" content="..." />
+    <meta name="keywords" content="..." />
+    
+    <link rel="index" href="./" title="Home" />
+	<script src="{% static  '' %}js/jquery.min.js"></script>  
+	<link rel="stylesheet" media="screen,projection" type="text/css" href="{% static  '' %}css/bootstrap.min.css" />  
+	<link rel="stylesheet" media="screen,projection" type="text/css" href="{% static  '' %}css/style.css" />  
+	<script src="{% static  '' %}js/bootstrap.min.js"></script>  	
+</head>
+<body>
+<div class="container content-box">
+<header>
+<nav class="navbar navbar-expand-lg navbar-light bg-transparent">
+  <a class="navbar-brand" href="#"> </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ml-auto">
+	 {% if request.session.user_logged_in %}
+	          <li class="nav-item">
+        <a class="nav-link" href="/user/dashboard">Dashboard</a>
+      </li>
+	  <li class="nav-item">
+        <a class="nav-link" href="/user/fileupload">File Upload</a>
+      </li>
+	   <li class="nav-item">
+        <a class="nav-link" href="/user/myfiles">My Files</a>
+      </li>
+	   <li class="nav-item">
+        <a class="nav-link" href="/user/auditrequest">Audit Request</a>
+      </li>
+	   <li class="nav-item">
+        <a class="nav-link" href="/user/proofcheck">Proof Check</a>
+      </li>
+	  {% elif request.session.kgc_logged_in %}
+	          <li class="nav-item">
+        <a class="nav-link" href="/kgc/dashboard">Dashboard</a>
+      </li>
+	  <li class="nav-item">
+        <a class="nav-link" href="/kgc/keyrequest">Key Request</a>
+      </li>
+	   <li class="nav-item">
+        <a class="nav-link" href="/kgc/users">Users</a> 
+		</li> 
+	  {% elif request.session.tpa_logged_in %}
+	          <li class="nav-item">
+        <a class="nav-link" href="/tpa/dashboard">Dashboard</a>
+      </li>
+	  <li class="nav-item">
+        <a class="nav-link" href="/tpa/auditrequest">Audit Request</a>
+      </li>
+	   <li class="nav-item">
+        <a class="nav-link" href="/tpa/requestcloud">Request Cloud</a> 
+		</li>		
+	   <li class="nav-item">
+        <a class="nav-link" href="/tpa/proofcheck">Proof Check</a> 
+		</li>	
+	  {% elif request.session.cloud_logged_in %}
+	          <li class="nav-item">
+        <a class="nav-link" href="/cloud/dashboard">Dashboard</a>
+      </li>
+	  <li class="nav-item">
+        <a class="nav-link" href="/cloud/sendproof">Send Proof</a>
+      </li>
+	  <li class="nav-item">
+        <a class="nav-link" href="/cloud/blockchain">Block Chain</a>
+      </li>
+	   <li class="nav-item">
+        <a class="nav-link" href="/cloud/files">Files in Cloud</a> 
+		</li>		 
+	 {% else %} 
+      <li class="nav-item">
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/user">User</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/kgc">KGC</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/tpa">TPA</a>
+      </li>
+	   <li class="nav-item">
+        <a class="nav-link" href="/cloud">Cloud</a>
+      </li>
+	  {% endif %}
+    </ul>
+  </div>
+</nav>
+</header>
+{% block content %}{% endblock %} 
+ </div>
+{% block footer %} 
+{% endblock %}
+{% block jsscript %} 
+{% endblock %}
+</body>
+</html>
